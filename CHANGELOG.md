@@ -2,6 +2,13 @@
 
 All notable changes to the "github-pr-comments-retriever" extension are documented in this file.
 
+## [0.1.3](https://github.com/vernonthedev/pr-comments-retriever/compare/v0.1.2...v0.1.3) (2026-03-24)
+
+
+### Bug Fixes
+
+* add repository URL to package.json for vsce ([ef77646](https://github.com/vernonthedev/pr-comments-retriever/commit/ef77646d0d5543412125c16d2bfc2b767cfab37e))
+
 ## [0.1.2](https://github.com/vernonthedev/pr-comments-retriever/compare/v0.1.1...v0.1.2) (2026-03-24)
 
 
