@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  validate:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +31,33 @@ jobs:
 
       - name: Lint sources
         run: pnpm run lint
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Compile
+        run: pnpm run compile
+
+      - name: Run tests with xvfb
+        uses: co-actions/setup-xvfb@v1
+        with:
+          run-tests-on-vm: true
 
       - name: Run tests
         run: pnpm run test
