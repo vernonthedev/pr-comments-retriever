@@ -18,6 +18,11 @@ async function getGitHubToken(): Promise<string | undefined> {
   return cachedToken;
 }
 
+async function getSaveLocation(): Promise<"workspace" | "home"> {
+  const config = vscode.workspace.getConfiguration("github-pr-comments-retriever");
+  return config.get<"workspace" | "home">("saveLocation") || "workspace";
+}
+
 async function fetchPR(owner: string, repo: string, prNumber: number, token?: string): Promise<PR> {
   const headers: Record<string, string> = {
     "Accept": "application/vnd.github.v3+json",
@@ -88,7 +93,11 @@ async function savePRData(owner: string, repo: string, prNumber: number): Promis
     fetchIssueComments(owner, repo, prNumber, token),
   ]);
 
-  const baseDir = path.join(os.homedir(), "github-prs");
+  const saveLocation = await getSaveLocation();
+  const workspaceFolder = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+  const baseDir = saveLocation === "workspace" && workspaceFolder
+    ? path.join(workspaceFolder, "github-prs")
+    : path.join(os.homedir(), "github-prs");
   const prDir = path.join(baseDir, sanitizeFolderName(pr.title));
 
   if (!fs.existsSync(baseDir)) {

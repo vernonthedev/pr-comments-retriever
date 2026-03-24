@@ -43,6 +43,12 @@
         "github-pr-comments-retriever.token": {
           "type": "string",
           "description": "GitHub Personal Access Token for API authentication"
+        },
+        "github-pr-comments-retriever.saveLocation": {
+          "type": "string",
+          "enum": ["workspace", "home"],
+          "default": "workspace",
+          "description": "Where to save PR data: 'workspace' uses the current folder, 'home' uses your home directory"
         }
       }
     }
