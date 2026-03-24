@@ -1,0 +1,102 @@
+name: Auto Release
+
+on:
+  workflow_run:
+    workflows:
+      - Test and Lint
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  release-please:
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') }}
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version }}
+
+    steps:
+      - name: Run release-please
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    runs-on: ubuntu-latest
+
+    env:
+      VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      OVSX_PAT: ${{ secrets.OVSX_PAT }}
+      OVSX_NAMESPACE_READY: ${{ vars.OVSX_NAMESPACE_READY }}
+      VSIX_PATH: github-pr-comments-retriever-${{ needs.release-please.outputs.version }}.vsix
+
+    steps:
+      - name: Validate publishing configuration
+        run: |
+          if [ -z "${VSCE_PAT}" ]; then
+            echo "Missing repository secret VSCE_PAT." >&2
+            exit 1
+          fi
+
+          if [ "${OVSX_NAMESPACE_READY}" = "true" ] && [ -z "${OVSX_PAT}" ]; then
+            echo "Missing repository secret OVSX_PAT while OVSX_NAMESPACE_READY=true." >&2
+            exit 1
+          fi
+
+      - name: Check Open VSX publishing mode
+        run: |
+          if [ "${OVSX_NAMESPACE_READY}" = "true" ]; then
+            echo "Open VSX publishing is enabled."
+          else
+            echo "Open VSX publishing is disabled."
+            echo "Set repository variable OVSX_NAMESPACE_READY=true after creating the 'vernonthedev' namespace on Open VSX."
+            echo "Until then, the workflow will still package the VSIX, publish to VS Code Marketplace, and upload the artifact to the GitHub release."
+          fi
+
+      - name: Check out release tag
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ needs.release-please.outputs.tag_name }}
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build extension bundle
+        run: pnpm run package
+
+      - name: Package VSIX
+        run: pnpm dlx @vscode/vsce package --out "${VSIX_PATH}"
+
+      - name: Publish to Visual Studio Marketplace
+        run: pnpm dlx @vscode/vsce publish -p "${VSCE_PAT}"
+
+      - name: Publish to Open VSX
+        if: ${{ env.OVSX_NAMESPACE_READY == 'true' }}
+        run: pnpm dlx ovsx publish "${VSIX_PATH}" -p "${OVSX_PAT}"
+
+      - name: Upload VSIX to GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload "${{ needs.release-please.outputs.tag_name }}" "${VSIX_PATH}" --clobber
