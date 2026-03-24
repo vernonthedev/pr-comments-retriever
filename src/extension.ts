@@ -8,7 +8,8 @@ import { sanitizeFolderName } from "./utils";
 
 async function getGitHubToken(): Promise<string | undefined> {
   const config = vscode.workspace.getConfiguration("github-pr-comments-retriever");
-  return config.get<string>("token");
+  const token = config.get<string>("token");
+  return token && token.trim() ? token.trim() : undefined;
 }
 
 async function fetchPR(owner: string, repo: string, prNumber: number, token?: string): Promise<PR> {
