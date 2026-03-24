@@ -1,71 +1,87 @@
-# github-pr-comments-retriever README
+# GitHub PR Comments Retriever
 
-This is the README for your extension "github-pr-comments-retriever". After writing up a brief description, we recommend including the following sections.
+A VSCode extension to retrieve and save all comments from a GitHub pull request, including reviews, issue comments, and descriptions.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- Retrieve all PR data including metadata, description, reviews, PR comments, and issue comments
+- Saves data to `~/github-prs/<PR-title>/` directory
+- Supports all comment types including AI agent comments (CodeRabbit, Codex, Qodo, Claude, etc.)
+- GitHub Personal Access Token (PAT) authentication
+- Handles pagination for large numbers of comments
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- GitHub Personal Access Token with `repo` scope (for private repos) or public repo access
+- Node.js 18+ (for development)
+
+## Setup
+
+### 1. Generate a GitHub Token
+
+1. Go to GitHub Settings > Developer settings > Personal access tokens
+2. Click "Generate new token (classic)"
+3. Select scopes:
+   - `repo` - for private repositories
+   - `public_repo` - for public repositories only
+4. Copy the generated token
+
+### 2. Configure the Token
+
+**Option A: Configure in VSCode Settings**
+1. Open VSCode Settings (Ctrl+, or Cmd+,)
+2. Search for "GitHub PR Comments Retriever"
+3. Add your token to the "Token" field
+
+**Option B: Enter when prompted**
+The extension will prompt you for a token if none is configured.
+
+## Usage
+
+1. Open VSCode
+2. Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (macOS)
+3. Type "Retrieve PR Comments" and press Enter
+4. Enter the repository in format `owner/repo` (e.g., `microsoft/vscode`)
+5. Enter the PR number (e.g., `123`)
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+* `github-pr-comments-retriever.token` - GitHub Personal Access Token for API authentication
+
+## Output Files
+
+The extension creates a folder named after the PR title in `~/github-prs/` containing:
+
+| File | Description |
+|------|-------------|
+| `metadata.json` | PR metadata (number, state, author, dates, URLs, etc.) |
+| `description.md` | PR body/description |
+| `pr-comments.md` | PR review comments (line-by-line comments) |
+| `reviews.md` | PR reviews (approval, changes requested, etc.) |
+| `issue-comments.md` | Issue-level comments (general PR discussions) |
+
+## Development
+
+```bash
+# Install dependencies
+pnpm install
+
+# Watch mode for development
+pnpm run watch
+
+# Build for production
+pnpm run package
+```
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- Rate limiting may occur without a GitHub token (60 requests/hour limit)
+- Very large PRs with many comments may take longer to fetch
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial release with PR comments retrieval functionality.
