@@ -98,7 +98,7 @@ async function savePRData(owner: string, repo: string, prNumber: number): Promis
   const baseDir = saveLocation === "workspace" && workspaceFolder
     ? path.join(workspaceFolder, "github-prs")
     : path.join(os.homedir(), "github-prs");
-  const prDir = path.join(baseDir, sanitizeFolderName(pr.title));
+  const prDir = path.join(baseDir, sanitizeFolderName(`#${pr.number} ${pr.title}`));
 
   if (!fs.existsSync(baseDir)) {
     fs.mkdirSync(baseDir, { recursive: true });
