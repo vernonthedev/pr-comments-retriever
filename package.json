@@ -3,6 +3,7 @@
   "displayName": "GitHub PR Comments Retriever",
   "description": "Retrieve and save all comments from a GitHub pull request",
   "version": "0.0.1",
+  "packageManager": "pnpm@9.0.0",
   "icon": "assets/github-pr-logo.png",
   "engines": {
     "vscode": "^1.110.0"
