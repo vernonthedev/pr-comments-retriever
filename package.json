@@ -5,6 +5,10 @@
   "version": "0.1.1",
   "packageManager": "pnpm@9.0.0",
   "icon": "assets/github-pr-logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vernonthedev/pr-comments-retriever.git"
+  },
   "engines": {
     "vscode": "^1.110.0"
   },
