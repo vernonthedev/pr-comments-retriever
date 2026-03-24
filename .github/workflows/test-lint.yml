@@ -32,6 +32,9 @@ jobs:
       - name: Lint sources
         run: pnpm run lint
 
+      - name: Compile
+        run: pnpm run compile
+
   test:
     runs-on: ubuntu-latest
 
@@ -54,10 +57,11 @@ jobs:
       - name: Compile
         run: pnpm run compile
 
-      - name: Run tests with xvfb
-        uses: co-actions/setup-xvfb@v1
-        with:
-          run-tests-on-vm: true
-
       - name: Run tests
-        run: pnpm run test
+        run: |
+          export DISPLAY=:99
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+         Xvfb :99 -screen 1024x768x24 &
+          sleep 3
+          pnpm run test
