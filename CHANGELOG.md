@@ -2,6 +2,13 @@
 
 All notable changes to the "github-pr-comments-retriever" extension are documented in this file.
 
+## [0.1.1](https://github.com/vernonthedev/pr-comments-retriever/compare/v0.1.0...v0.1.1) (2026-03-24)
+
+
+### Bug Fixes
+
+* add pnpm overrides and update vsce commands for CI ([a0f4c2c](https://github.com/vernonthedev/pr-comments-retriever/commit/a0f4c2c1ed0f8b506ed822b2b1d435bfeee721d3))
+
 ## [0.1.0](https://github.com/vernonthedev/pr-comments-retriever/compare/v0.0.1...v0.1.0) (2026-03-24)
 
 
