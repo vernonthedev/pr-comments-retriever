@@ -80,20 +80,20 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Build extension bundle
-        run: pnpm run package
+        run: pnpm run compile
 
       - name: Package VSIX
-        run: pnpm dlx @vscode/vsce package --out "${VSIX_PATH}"
+        run: pnpm dlx vsce package --no-dependencies --out "${VSIX_PATH}"
 
       - name: Publish to Visual Studio Marketplace
-        run: pnpm dlx @vscode/vsce publish -p "${VSCE_PAT}"
+        run: pnpm dlx vsce publish -p "${VSCE_PAT}" --no-dependencies
 
       - name: Publish to Open VSX
         if: ${{ env.OVSX_NAMESPACE_READY == 'true' }}
-        run: pnpm dlx ovsx publish "${VSIX_PATH}" -p "${OVSX_PAT}"
+        run: pnpm dlx ovsx publish "${VSIX_PATH}" -p "${OVSX_PAT}" --no-dependencies
 
       - name: Upload VSIX to GitHub release
         env:

@@ -8,6 +8,15 @@
   "engines": {
     "vscode": "^1.110.0"
   },
+  "pnpm": {
+    "overrides": {
+      "eslint": "$eslint"
+    },
+    "onlyBuiltDependencies": [
+      "@vscode/vsce-sign",
+      "keytar"
+    ]
+  },
   "categories": [
     "Other"
   ],
