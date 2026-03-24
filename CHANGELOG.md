@@ -1,12 +1,10 @@
 # Change Log
 
-All notable changes to the "github-pr-comments-retriever" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+All notable changes to the "github-pr-comments-retriever" extension are documented in this file.
 
 ## [Unreleased]
 
-## [0.0.1] - 2024-03-24
+## [0.0.1] - 2026-03-24
 
 ### Added
 
@@ -22,7 +20,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - **Token Caching**: Token is cached in memory after first entry for the session
 - **Persistent Token**: Token saved to VSCode global settings (persists across restarts)
 - **Auto-save**: PR data automatically saved to `github-prs/<PR-number> <PR-title>/` folder
-- **Structured Output**: 
+- **Structured Output**:
   - `metadata.json` - PR metadata (number, state, author, dates, URLs)
   - `description.md` - PR body/description
   - `pr-comments.md` - PR review comments
