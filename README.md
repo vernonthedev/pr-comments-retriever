@@ -99,8 +99,6 @@ pnpm run package
 - Rate limiting may occur without a GitHub token (60 requests/hour limit)
 - Very large PRs with many comments may take longer to fetch
 
-## Release Notes
+---
 
-### 0.0.1
-
-Initial release with PR comments retrieval functionality.
+Developed by @vernonthedev 🔥
