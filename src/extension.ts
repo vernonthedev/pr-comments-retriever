@@ -6,10 +6,16 @@ import axios from "axios";
 import { PRComment, PRReview, PRIssueComment, PR, PRMetadata } from "./types";
 import { sanitizeFolderName } from "./utils";
 
+let cachedToken: string | undefined;
+
 async function getGitHubToken(): Promise<string | undefined> {
+  if (cachedToken) {
+    return cachedToken;
+  }
   const config = vscode.workspace.getConfiguration("github-pr-comments-retriever");
   const token = config.get<string>("token");
-  return token && token.trim() ? token.trim() : undefined;
+  cachedToken = token && token.trim() ? token.trim() : undefined;
+  return cachedToken;
 }
 
 async function fetchPR(owner: string, repo: string, prNumber: number, token?: string): Promise<PR> {
