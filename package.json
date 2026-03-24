@@ -1,8 +1,9 @@
 {
   "name": "github-pr-comments-retriever",
-  "displayName": "github-pr-comments-retriever",
-  "description": "Github PR Comments Retriever",
+  "displayName": "GitHub PR Comments Retriever",
+  "description": "Retrieve and save all comments from a GitHub pull request",
   "version": "0.0.1",
+  "icon": "assets/github-pr-logo.png",
   "engines": {
     "vscode": "^1.110.0"
   },
