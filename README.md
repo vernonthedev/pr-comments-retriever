@@ -101,4 +101,4 @@ pnpm run package
 
 ---
 
-Developed by @vernonthedev 🔥
+Developed by @vernonthedev ❤️
