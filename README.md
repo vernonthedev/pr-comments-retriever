@@ -8,7 +8,7 @@ A VSCode extension to retrieve and save all comments from a GitHub pull request,
 
 ## Current Release
 
-- Latest version: `0.1.0` <!-- x-release-please-version -->
+- Latest version: `0.1.1` <!-- x-release-please-version -->
 - Release notes: see [CHANGELOG.md](./CHANGELOG.md) and [GitHub Releases](https://github.com/vernonthedev/pr-comments-retriever/releases)
 - License: [Apache-2.0](./LICENSE)
 
