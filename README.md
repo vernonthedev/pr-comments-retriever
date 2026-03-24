@@ -57,7 +57,21 @@ This extension contributes the following settings:
 
 ## Output Files
 
-The extension creates a folder named after the PR title in `~/github-prs/` containing:
+Each PR is saved to its own folder named after the PR title under `~/github-prs/`:
+
+```
+~/github-prs/
+├── "Fix login bug"/
+│   ├── metadata.json
+│   ├── description.md
+│   ├── pr-comments.md
+│   ├── reviews.md
+│   └── issue-comments.md
+├── "Add dark mode support"/
+│   ├── metadata.json
+│   └── ...
+└── ...
+```
 
 | File                | Description                                            |
 | ------------------- | ------------------------------------------------------ |
