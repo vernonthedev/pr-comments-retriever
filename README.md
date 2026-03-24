@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/github-pr-logo.png" alt="Github PR Extension logo" width="160" />
+</p>
+
 # GitHub PR Comments Retriever
 
 A VSCode extension to retrieve and save all comments from a GitHub pull request, including reviews, issue comments, and descriptions.
@@ -29,6 +33,7 @@ A VSCode extension to retrieve and save all comments from a GitHub pull request,
 ### 2. Configure the Token
 
 **Option A: Configure in VSCode Settings**
+
 1. Open VSCode Settings (Ctrl+, or Cmd+,)
 2. Search for "GitHub PR Comments Retriever"
 3. Add your token to the "Token" field
@@ -48,19 +53,19 @@ The extension will prompt you for a token if none is configured.
 
 This extension contributes the following settings:
 
-* `github-pr-comments-retriever.token` - GitHub Personal Access Token for API authentication
+- `github-pr-comments-retriever.token` - GitHub Personal Access Token for API authentication
 
 ## Output Files
 
 The extension creates a folder named after the PR title in `~/github-prs/` containing:
 
-| File | Description |
-|------|-------------|
-| `metadata.json` | PR metadata (number, state, author, dates, URLs, etc.) |
-| `description.md` | PR body/description |
-| `pr-comments.md` | PR review comments (line-by-line comments) |
-| `reviews.md` | PR reviews (approval, changes requested, etc.) |
-| `issue-comments.md` | Issue-level comments (general PR discussions) |
+| File                | Description                                            |
+| ------------------- | ------------------------------------------------------ |
+| `metadata.json`     | PR metadata (number, state, author, dates, URLs, etc.) |
+| `description.md`    | PR body/description                                    |
+| `pr-comments.md`    | PR review comments (line-by-line comments)             |
+| `reviews.md`        | PR reviews (approval, changes requested, etc.)         |
+| `issue-comments.md` | Issue-level comments (general PR discussions)          |
 
 ## Development
 
