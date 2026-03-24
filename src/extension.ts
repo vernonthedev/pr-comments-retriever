@@ -3,43 +3,8 @@ import * as fs from "fs";
 import * as path from "path";
 import os from "os";
 import axios from "axios";
-
-interface PRComment {
-  id: number;
-  body: string;
-  user: { login: string };
-  created_at: string;
-  updated_at: string;
-}
-
-interface PRReview {
-  id: number;
-  body: string;
-  user: { login: string };
-  state: string;
-  submitted_at: string;
-}
-
-interface PRIssueComment {
-  id: number;
-  body: string;
-  user: { login: string };
-  created_at: string;
-}
-
-interface PR {
-  id: number;
-  number: number;
-  title: string;
-  body: string;
-  state: string;
-  html_url: string;
-  user: { login: string };
-  created_at: string;
-  updated_at: string;
-  comments: number;
-  review_comments: number;
-}
+import { PRComment, PRReview, PRIssueComment, PR, PRMetadata } from "./types";
+import { sanitizeFolderName } from "./utils";
 
 async function getGitHubToken(): Promise<string | undefined> {
   const config = vscode.workspace.getConfiguration("github-pr-comments-retriever");
@@ -106,10 +71,6 @@ async function fetchIssueComments(owner: string, repo: string, prNumber: number,
   return response.data;
 }
 
-function sanitizeFolderName(name: string): string {
-  return name.replace(/[<>:"/\\|?*]/g, "_").trim().slice(0, 200);
-}
-
 async function savePRData(owner: string, repo: string, prNumber: number): Promise<string> {
   const token = await getGitHubToken();
 
@@ -130,7 +91,7 @@ async function savePRData(owner: string, repo: string, prNumber: number): Promis
     fs.mkdirSync(prDir, { recursive: true });
   }
 
-  const metadata = {
+  const metadata: PRMetadata = {
     owner,
     repo,
     prNumber: pr.number,
@@ -255,7 +216,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage(`PR data saved to: ${prDir}`);
         const doc = await vscode.workspace.openTextDocument(prDir);
         await vscode.window.showTextDocument(doc);
-      } catch (error: any) {
+      } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {
             vscode.window.showErrorMessage("Authentication failed. Please check your GitHub token.");
@@ -264,8 +225,10 @@ export function activate(context: vscode.ExtensionContext) {
           } else {
             vscode.window.showErrorMessage(`GitHub API error: ${error.response?.status} - ${error.response?.statusText}`);
           }
-        } else {
+        } else if (error instanceof Error) {
           vscode.window.showErrorMessage(`Error: ${error.message}`);
+        } else {
+          vscode.window.showErrorMessage("An unknown error occurred");
         }
       }
     }

@@ -3,6 +3,8 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 import * as os from "os";
+import { PRComment, PRReview, PRIssueComment, PR } from "../types";
+import { sanitizeFolderName } from "../utils";
 
 suite("Extension Test Suite", () => {
   vscode.window.showInformationMessage("Start all tests.");
@@ -165,44 +167,3 @@ suite("Extension Test Suite", () => {
     });
   });
 });
-
-interface PRComment {
-  id: number;
-  body: string;
-  user: { login: string };
-  created_at: string;
-  updated_at: string;
-}
-
-interface PRReview {
-  id: number;
-  body: string;
-  user: { login: string };
-  state: string;
-  submitted_at: string;
-}
-
-interface PRIssueComment {
-  id: number;
-  body: string;
-  user: { login: string };
-  created_at: string;
-}
-
-interface PR {
-  id: number;
-  number: number;
-  title: string;
-  body: string;
-  state: string;
-  html_url: string;
-  user: { login: string };
-  created_at: string;
-  updated_at: string;
-  comments: number;
-  review_comments: number;
-}
-
-function sanitizeFolderName(name: string): string {
-  return name.replace(/[<>:"/\\|?*]/g, "_").trim().slice(0, 200);
-}
