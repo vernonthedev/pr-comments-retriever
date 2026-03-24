@@ -2,6 +2,13 @@
 
 All notable changes to the "github-pr-comments-retriever" extension are documented in this file.
 
+## [0.1.4](https://github.com/vernonthedev/pr-comments-retriever/compare/v0.1.3...v0.1.4) (2026-03-24)
+
+
+### Bug Fixes
+
+* add publisher name to package.json ([c273a36](https://github.com/vernonthedev/pr-comments-retriever/commit/c273a36cc7b95ef4910fe90a981022cc9f85e775))
+
 ## [0.1.3](https://github.com/vernonthedev/pr-comments-retriever/compare/v0.1.2...v0.1.3) (2026-03-24)
 
 
