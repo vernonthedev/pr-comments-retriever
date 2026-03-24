@@ -2,6 +2,13 @@
 
 All notable changes to the "github-pr-comments-retriever" extension are documented in this file.
 
+## [0.1.2](https://github.com/vernonthedev/pr-comments-retriever/compare/v0.1.1...v0.1.2) (2026-03-24)
+
+
+### Bug Fixes
+
+* update pnpm lockfile with overrides config ([edae609](https://github.com/vernonthedev/pr-comments-retriever/commit/edae60990a0f61c1e268cb88904311bc014f2ab6))
+
 ## [0.1.1](https://github.com/vernonthedev/pr-comments-retriever/compare/v0.1.0...v0.1.1) (2026-03-24)
 
 
