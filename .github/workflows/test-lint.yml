@@ -35,33 +35,5 @@ jobs:
       - name: Compile
         run: pnpm run compile
 
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v5
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Compile
-        run: pnpm run compile
-
-      - name: Run tests
-        run: |
-          export DISPLAY=:99
-          sudo apt-get update
-          sudo apt-get install -y xvfb
-          Xvfb :99 -screen 1024x768x24 &
-          sleep 3
-          pnpm run test
+      - name: Compile tests
+        run: pnpm run compile-tests
