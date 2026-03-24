@@ -174,7 +174,7 @@ export function activate(context: vscode.ExtensionContext) {
     "github-pr-comments-retriever.retrievePR",
     async () => {
       try {
-        const token = await getGitHubToken();
+        let token = await getGitHubToken();
         if (!token) {
           const setting = await vscode.window.showInputBox({
             prompt: "No GitHub token configured. Please enter your GitHub Personal Access Token",
@@ -186,6 +186,8 @@ export function activate(context: vscode.ExtensionContext) {
           }
           const config = vscode.workspace.getConfiguration("github-pr-comments-retriever");
           await config.update("token", setting, vscode.ConfigurationTarget.Global);
+          cachedToken = setting.trim();
+          token = cachedToken;
         }
 
         const repoInput = await vscode.window.showInputBox({
