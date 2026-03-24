@@ -6,6 +6,12 @@
 
 A VSCode extension to retrieve and save all comments from a GitHub pull request, including reviews, issue comments, and descriptions.
 
+## Current Release
+
+- Latest version: `0.0.1` <!-- x-release-please-version -->
+- Release notes: see [CHANGELOG.md](./CHANGELOG.md) and [GitHub Releases](https://github.com/vernonthedev/pr-comments-retriever/releases)
+- License: [Apache-2.0](./LICENSE)
+
 ## Features
 
 - Retrieve all PR data including metadata, description, reviews, PR comments, and issue comments
