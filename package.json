@@ -21,6 +21,22 @@
         "title": "Retrieve PR Comments"
       }
     ],
+    "keybindings": [
+      {
+        "command": "github-pr-comments-retriever.retrievePR",
+        "key": "ctrl+shift+g",
+        "mac": "cmd+shift+g"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "github-pr-comments-retriever.retrievePR",
+          "when": "true",
+          "title": "Retrieve PR Comments"
+        }
+      ]
+    },
     "configuration": {
       "title": "GitHub PR Comments Retriever",
       "properties": {
