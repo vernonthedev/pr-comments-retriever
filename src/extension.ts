@@ -223,8 +223,7 @@ export function activate(context: vscode.ExtensionContext) {
         const prDir = await savePRData(owner, repo, prNumber);
 
         vscode.window.showInformationMessage(`PR data saved to: ${prDir}`);
-        const doc = await vscode.workspace.openTextDocument(prDir);
-        await vscode.window.showTextDocument(doc);
+        await vscode.commands.executeCommand("revealFileInExplorer", prDir);
       } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {
